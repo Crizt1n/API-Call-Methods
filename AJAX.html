@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+  <!-- Bootstrap -->
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+  <!-- Javascript -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <div class="container">  
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <h1 class="text-center text-primary mt-5">To Do List</h1>
+                <table class="table-bordered text-center mt-5 ">
+
+                    <thead>
+                      <tr>
+                        <th scope="col">User ID</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Completed</th>
+                      </tr>
+                    </thead>
+                    <tbody id="result">
+                 
+                    </tbody>
+                  </table>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div> 
+    
+</body>
+<script>
+    //AJAX method makes use of a class XMLHttprequest
+
+    // 1st create object
+    const http = new XMLHttpRequest()
+
+    //2nd open  method - api connection establishing
+    http.open("get","https://jsonplaceholder.typicode.com/todos")
+    
+    //3rd send request
+    http.send()
+
+    //Readystate - initial 1-4
+    console.log(http.readyState);
+    http.onreadystatechange =()=>{
+       console.log(http.readyState);
+       if(http.readyState==4){
+        if(http.status>=200 && http.status<300){
+         // console.log(http.responseText); // predefined Function For fetching datas
+          let alltodos = JSON.parse(http.responseText)
+          console.log(alltodos);
+
+          alltodos.forEach(item=>{
+            result.innerHTML+=`<tr>
+              <td>${item.userId}</td>
+              <td>${item.id}</td>
+              <td>${item.title}</td>
+              <td>${item.completed}</td>
+              </tr>`
+          });
+        }
+       }
+       else {
+        console.log('not recieved');
+       }
+    }
+
+</script>
+</html>
